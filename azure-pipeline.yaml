@@ -15,7 +15,7 @@ pr:
      endpoint: github.com_Chinnu6696
 
 steps:
-  - template: azuretemplate/azure-pipelines.yaml/
+  - template: azuretemplate/azure-pipelines.yaml/@resuabePublicAssets
     parameters:
       goal: 'package'
       specificVersion: ''

@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: none
+
+pool: default
+
+pr:
+  - main
+
+
+steps:
+    - task: JFrogMaven@1
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'install'
+        artifactoryResolverService: 'JFROG-CLOUD'
+        targetResolveReleaseRepo: 'spring-petclinic-libs-release'
+        targetResolveSnapshotRepo: 'spring-petclinic-libs-snapshot'
+        artifactoryDeployService: 'JFROG-CLOUD'
+        targetDeployReleaseRepo: 'spring-petclinic-libs-release'
+        targetDeploySnapshotRepo: 'spring-petclinic-libs-snapshot'
+        javaHomeOption: 'JDKVersion'
+    - task: JFrogPublishBuildInfo@1
+      inputs:
+            artifactoryConnection: 'JFROG-CLOUD'
+            buildName: '$(Build.DefinitionName)'
+            buildNumber: '$(Build.BuildNumber)'
